@@ -28,9 +28,9 @@
       <div class="hero__status reveal" id="status" aria-live="polite"></div>
       <nav class="quicknav reveal" aria-label="Sections">
         <a href="#info">Key info</a>
+        <a href="#packing">Packing</a>
         <a href="#days">Day by day</a>
         <a href="#meals">Meals</a>
-        <a href="#packing">Packing</a>
       </nav>
     </div>
     <div class="hero__waves" aria-hidden="true"></div>
@@ -40,6 +40,19 @@
     <section id="info" class="section">
       <h2 class="section__title">Key info</h2>
       <div class="info-grid" id="info-grid"></div>
+    </section>
+
+    <section id="packing" class="section">
+      <h2 class="section__title">Packing list</h2>
+      <p class="section__lead">Tick things off as you pack. Your ticks are saved on this phone only.</p>
+      <div class="progress" id="progress">
+        <div class="progress__bar"><div class="progress__fill" id="progress-fill"></div></div>
+        <div class="progress__row">
+          <span id="progress-text">0 of 0 packed</span>
+          <button type="button" class="btn-link" id="reset-packing">Reset</button>
+        </div>
+      </div>
+      <div class="pack-groups" id="pack-groups"></div>
     </section>
 
     <section id="days" class="section">
@@ -59,18 +72,6 @@
       <div class="glance" id="glance"></div>
     </section>
 
-    <section id="packing" class="section">
-      <h2 class="section__title">Packing list</h2>
-      <p class="section__lead">Tick things off as you pack. Your ticks are saved on this phone only.</p>
-      <div class="progress" id="progress">
-        <div class="progress__bar"><div class="progress__fill" id="progress-fill"></div></div>
-        <div class="progress__row">
-          <span id="progress-text">0 of 0 packed</span>
-          <button type="button" class="btn-link" id="reset-packing">Reset</button>
-        </div>
-      </div>
-      <div class="pack-groups" id="pack-groups"></div>
-    </section>
   </main>
 
   <footer class="footer">

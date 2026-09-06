@@ -129,11 +129,11 @@ window.TRIP = {
           part: "Morning",
           items: [
             { time: "7:30am", kind: "bus", title: "Bus pick-up at AirBnB Ola Mutiara" },
-            { time: "8:30am", kind: "meal", pay: "own", title: "Breakfast at Seremban Market",
+            { time: "8:30am", kind: "meal", pay: "own", title: "Breakfast at Seremban Market", icon: "market",
               note: "We also shop for fresh seafood and fish for the kids' bushcraft.",
               image: { src: "img/seremban-market.jpg", alt: "Seremban Grand Market building", caption: "Seremban Grand Market",
         credit: { title: "Seremban Grand Market", author: "Chongkian", license: "CC BY-SA 4.0", url: "https://commons.wikimedia.org/wiki/File:Seremban_Grand_Market.jpg" } } },
-            { time: "10:00am", kind: "activity", title: "Hike, bushcraft & water play @ Ulu Bendul",
+            { time: "10:00am", kind: "activity", title: "Hike, bushcraft & water play @ Ulu Bendul", icon: "activity",
               image: { src: "img/gunung-angsi.jpg", alt: "Gunung Angsi seen across the fields", caption: "Gunung Angsi, the adults' hiking trail",
         credit: { title: "Angsi Mountain 3", author: "AyyanD", license: "CC BY-SA 4.0", url: "https://commons.wikimedia.org/wiki/File:Angsi_Mountain_3.jpg" } },
               steps: [
@@ -243,7 +243,7 @@ window.TRIP = {
             { time: "6:00pm", kind: "bus", title: "Bus pick-up at AirBnB Ola Mutiara" },
             { time: "6:30pm", kind: "meal", pay: "own", title: "Dinner at Yun Long Seafood Restaurant" },
             { time: "7:45pm", kind: "bus", title: "Head to the Negeri Sembilan Observatory" },
-            { time: "8:00pm", kind: "activity", title: "Astronomy night @ Negeri Sembilan Observatory",
+            { time: "8:00pm", kind: "activity", title: "Astronomy night @ Negeri Sembilan Observatory", icon: "star",
               image: { src: "img/milky-way.jpg", alt: "The Milky Way over a dark landscape", caption: "The Milky Way (stock photo, not taken in Malaysia)",
         credit: { title: "Milky Way Panorama (183296559)", author: "Panagiotis Laoudikos", license: "CC BY 3.0", url: "https://commons.wikimedia.org/wiki/File:Milky_Way_Panorama_(183296559).jpeg" } },
               steps: [
@@ -300,7 +300,7 @@ window.TRIP = {
                 "Tapioca fries and salad"
               ]
             },
-            { time: "12:15pm", kind: "activity", title: "Intertidal walk @ Pantai Teluk Pelanduk",
+            { time: "12:15pm", kind: "activity", title: "Intertidal walk @ Pantai Teluk Pelanduk", icon: "wave",
               steps: [
                 { time: "12:15pm", text: "Introductory talk on the intertidal zone, its inhabitants, and how the ebb and rise of the tide shapes this area between land and sea" },
                 { time: "1:00pm", text: "Walk to the beach" },
@@ -369,7 +369,7 @@ window.TRIP = {
           items: [
             { time: "12:30pm", kind: "meal", pay: "own", title: "Lunch stop at Yong Peng: 新村瓮窑鸡 Xing Cun Restaurant",
               address: "7322, Jln Besar, Taman Sembrong Baru, 83700 Yong Peng, Johor Darul Ta'zim, Malaysia" },
-            { time: "4:00pm", kind: "bus", title: "ETA Singapore, drop-off at each family's home" }
+            { time: "4:00pm", kind: "bus", title: "ETA Singapore, drop-off at each family's home", icon: "flag" }
           ]
         }
       ]

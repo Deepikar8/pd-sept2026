@@ -53,8 +53,20 @@
     home: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg>`,
     cash: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M7 12h.01M17 12h.01"/></svg>`,
     food: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16"/><path d="M5 12a7 7 0 0 1 14 0"/><path d="M3 16h18"/><path d="M12 5V3"/></svg>`,
-    pin: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2"/></svg>`
+    pin: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2"/></svg>`,
+    activity: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20l6-10 4 6 2-3 6 7z"/><circle cx="17" cy="6" r="2"/></svg>`,
+    rest: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h12v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"/><path d="M16 9h2a2 2 0 0 1 0 4h-2"/><path d="M3 21h14"/></svg>`,
+    star: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>`,
+    wave: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M2 16c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>`,
+    market: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16l-1.5 10h-13z"/><path d="M8 9l3-5M16 9l-3-5"/></svg>`,
+    flag: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 4h12l-2 4 2 4H5"/></svg>`
   };
+  const KIND_ICON = { bus: "bus", meal: "food", activity: "activity", stay: "home", rest: "rest" };
+  function badge(it) {
+    const glyph = ICON[it.icon] || ICON[KIND_ICON[it.kind]] || ICON.activity;
+    const tone = it.kind === "meal" ? (it.pay === "own" ? " tl-icon--own" : " tl-icon--han") : "";
+    return `<span class="tl-icon${tone}" aria-hidden="true">${glyph}</span>`;
+  }
 
   /* ------------------------------------------------------------ status */
   function tripPhase(iso) {
@@ -116,6 +128,7 @@
     }
     return `<div class="${cls}" data-min="${toMinutes(it.time)}">
       <div class="tl-time">${esc(it.time)}</div>
+      ${badge(it)}
       <div class="tl-body">
         <div class="tl-title"><span>${esc(it.title)}</span>${payTag(it.pay)}<span class="now-slot"></span></div>
         ${it.note ? `<p class="tl-note">${esc(it.note)}</p>` : ""}
@@ -136,6 +149,16 @@
         ${d.handy && d.handy.length ? `<div class="handy"><p class="handy__label">Pack for today</p><ul>${d.handy.map(h => `<li>${esc(h)}</li>`).join("")}</ul></div>` : ""}
         ${d.blocks.map(b => `<div class="part"><p class="part__label">${esc(b.part)}</p><div class="tl">${b.items.map(renderItem).join("")}</div></div>`).join("")}
       </section>`).join("");
+  }
+  function renderLegend() {
+    const el = $("#legend"); if (!el) return;
+    el.innerHTML = [
+      ["tl-icon tl-icon--han", ICON.food, "Meal by Han, included"],
+      ["tl-icon tl-icon--own", ICON.food, "Meal you pay for, bring RM"],
+      ["tl-icon", ICON.bus, "Bus"],
+      ["tl-icon", ICON.activity, "Activity"],
+      ["tl-icon", ICON.home, "Stay"]
+    ].map(([c, g, l]) => `<span class="legend__item"><span class="${c} tl-icon--sm" aria-hidden="true">${g}</span>${l}</span>`).join("");
   }
   function selectDay(idx, focus) {
     document.querySelectorAll(".tab").forEach(t => {
@@ -265,6 +288,7 @@
     renderInfo();
     renderTabs(selected, todayIdx);
     renderPanels(selected);
+    renderLegend();
     wireTabs();
     markNow(todayIdx);
     renderGlance();

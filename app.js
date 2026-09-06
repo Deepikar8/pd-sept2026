@@ -7,6 +7,7 @@
   const T = window.TRIP;
   const $ = (sel, root) => (root || document).querySelector(sel);
   const STORAGE_KEY = "pd2026.packing";
+  const DAYPACK_KEY = "pd2026.daypack";
 
   /* ----------------------------------------------------------- helpers */
   function pad(n) { return String(n).padStart(2, "0"); }
@@ -146,7 +147,7 @@
           <h3 class="day__title">${esc(d.title)}</h3>
         </div>
         ${photo(d.cover, "cover")}
-        ${d.handy && d.handy.length ? `<div class="handy"><p class="handy__label">Pack for today</p><ul>${d.handy.map(h => `<li>${esc(h)}</li>`).join("")}</ul></div>` : ""}
+        ${d.handy && d.handy.length ? renderHandy(d, i) : ""}
         ${d.blocks.map(b => `<div class="part"><p class="part__label">${esc(b.part)}</p><div class="tl">${b.items.map(renderItem).join("")}</div></div>`).join("")}
       </section>`).join("");
   }
@@ -159,6 +160,41 @@
       ["tl-icon", ICON.activity, "Activity"],
       ["tl-icon", ICON.home, "Stay"]
     ].map(([c, g, l]) => `<span class="legend__item"><span class="${c} tl-icon--sm" aria-hidden="true">${g}</span>${l}</span>`).join("");
+  }
+  /* "Pack for today" chips: tappable, remembered per day on this phone */
+  function loadDayPack() {
+    try { return JSON.parse(localStorage.getItem(DAYPACK_KEY) || "{}") || {}; } catch (e) { return {}; }
+  }
+  function saveDayPack(v) {
+    try { localStorage.setItem(DAYPACK_KEY, JSON.stringify(v)); } catch (e) { /* private mode etc. */ }
+  }
+  function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""); }
+  function renderHandy(d, i) {
+    const ticks = loadDayPack()[d.date] || {};
+    const items = d.handy.map(h => {
+      const id = slug(h), on = !!ticks[id];
+      return `<li><label class="handy__item${on ? " is-packed" : ""}">
+        <input type="checkbox" data-date="${esc(d.date)}" data-item="${esc(id)}"${on ? " checked" : ""}>
+        <span class="handy__check" aria-hidden="true"></span><span>${esc(h)}</span></label></li>`;
+    }).join("");
+    const done = d.handy.filter(h => ticks[slug(h)]).length;
+    return `<div class="handy" data-date="${esc(d.date)}">
+      <p class="handy__label">Pack for today <span class="handy__count" id="handy-count-${i}">${done} of ${d.handy.length} packed</span></p>
+      <ul>${items}</ul></div>`;
+  }
+  function wireHandy() {
+    $("#daypanels").addEventListener("change", e => {
+      const box = e.target; if (box.type !== "checkbox" || !box.dataset.date) return;
+      const all = loadDayPack();
+      const day = all[box.dataset.date] || (all[box.dataset.date] = {});
+      if (box.checked) day[box.dataset.item] = true; else delete day[box.dataset.item];
+      saveDayPack(all);
+      box.closest(".handy__item").classList.toggle("is-packed", box.checked);
+      const wrap = box.closest(".handy");
+      const boxes = wrap.querySelectorAll("input[type=checkbox]");
+      const done = wrap.querySelectorAll("input[type=checkbox]:checked").length;
+      wrap.querySelector(".handy__count").textContent = `${done} of ${boxes.length} packed`;
+    });
   }
   function selectDay(idx, focus) {
     document.querySelectorAll(".tab").forEach(t => {
@@ -392,6 +428,7 @@
     renderPanels(selected);
     renderLegend();
     wireTabs();
+    wireHandy();
     renderJourney();
     wireJourney();
     markNow(todayIdx);

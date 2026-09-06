@@ -273,9 +273,26 @@ main { max-width: 760px; margin: 0 auto; padding: 0 1rem 3rem; }
   padding: .8rem 1rem;
   margin-bottom: 1.1rem;
 }
-.handy__label { font-size: .75rem; text-transform: uppercase; letter-spacing: .14em; font-weight: 700; color: var(--sea-ink); margin-bottom: .35rem; }
-.handy ul { display: flex; flex-wrap: wrap; gap: .35rem; }
-.handy li { font-size: .86rem; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: .2rem .6rem; color: var(--ink-2); }
+.handy__label { font-size: .75rem; text-transform: uppercase; letter-spacing: .14em; font-weight: 700; color: var(--sea-ink); margin-bottom: .45rem; display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; }
+.handy__count { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-2); font-size: .8rem; }
+.handy ul { display: flex; flex-wrap: wrap; gap: .4rem; }
+.handy__item {
+  display: inline-flex; align-items: center; gap: .4rem; cursor: pointer; user-select: none;
+  font-size: .88rem; background: var(--card); border: 1.5px solid var(--line); border-radius: 999px;
+  padding: .3rem .7rem .3rem .4rem; color: var(--ink-2);
+  transition: background .15s, border-color .15s, color .15s;
+}
+.handy__item:hover { border-color: var(--sea); }
+.handy__item input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
+.handy__item:has(input:focus-visible) { outline: 2px solid var(--sea); outline-offset: 2px; }
+.handy__check {
+  width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--sea); flex: none;
+  display: grid; place-items: center; background: var(--paper);
+}
+.handy__check::after { content: ""; width: 9px; height: 5px; border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg) translate(1px, -1px); opacity: 0; }
+.handy__item.is-packed { background: var(--sea); border-color: var(--sea); color: #fff; }
+.handy__item.is-packed .handy__check { background: var(--sea-ink); border-color: #fff; }
+.handy__item.is-packed .handy__check::after { opacity: 1; }
 
 .part { margin-top: 1.3rem; }
 .part__label {

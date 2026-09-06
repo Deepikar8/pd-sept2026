@@ -34,6 +34,7 @@ window.TRIP = {
       ],
       places: [
         { name: "Wed 9 – Sat 12 · AirBnB Ola Mutiara",
+          image: "img/ola-mutiara.jpg",
           address: "3810, Jalan Siakap 1, Taman Pantai Dickson, 71050 Port Dickson, Negeri Sembilan, Malaysia" },
         { name: "Sat 12 – Sun 13 · AirBnB Vista Asana",
           address: "165, Lot 3808 Jalan Siakap 1, Taman Peranginan Mutiara, Taman Pantai Dickson, 71050 Port Dickson, Negeri Sembilan, Malaysia" }
@@ -83,8 +84,7 @@ window.TRIP = {
               address: "Jaya, 1, Jln KLJ 9, Taman Kota Laksamana, 75200 Melaka, Malaysia" },
             { time: "2:00pm", kind: "bus", title: "Depart for Port Dickson" },
             { time: "4:00pm", kind: "stay", title: "Drop-off and check-in at AirBnB Ola Mutiara",
-              image: { src: "img/port-dickson-teluk-kemang.jpg", alt: "Beach at Teluk Kemang, Port Dickson", caption: "Port Dickson: Teluk Kemang beach",
-        credit: { title: "Teluk Kemang Beach, Port Dickson (2)", author: "AyyanD", license: "CC BY-SA 3.0", url: "https://commons.wikimedia.org/wiki/File:Teluk_Kemang_Beach,_Port_Dickson_(2).jpg" } },
+              image: { src: "img/ola-mutiara.jpg", alt: "Pool and rooms at AirBnB Ola Mutiara at dusk", caption: "Home for the first three nights: Ola Mutiara", position: "center 60%" },
               address: "3810, Jalan Siakap 1, Taman Pantai Dickson, 71050 Port Dickson, Negeri Sembilan, Malaysia" }
           ]
         },

@@ -38,7 +38,8 @@
   }
   function photo(p, cls) {
     if (!p || !p.src) return "";
-    return `<figure class="${cls}"><img src="${esc(p.src)}" alt="${esc(p.alt || "")}" loading="lazy" decoding="async">` +
+    const pos = p.position ? ` style="object-position:${esc(p.position)}"` : "";
+    return `<figure class="${cls}"><img src="${esc(p.src)}" alt="${esc(p.alt || "")}" loading="lazy" decoding="async"${pos}>` +
            `${p.caption ? `<figcaption>${esc(p.caption)}</figcaption>` : ""}</figure>`;
   }
   function payTag(pay) {
@@ -82,7 +83,9 @@
     $("#info-grid").innerHTML = T.keyInfo.map(card => {
       const lines = (card.lines || []).map(l => `<li>${esc(l)}</li>`).join("");
       const places = (card.places || []).map(pl =>
-        `<li class="place"><span class="place__name">${esc(pl.name)}</span><br>${mapLink(pl.address)}</li>`).join("");
+        `<li class="place${pl.image ? " place--photo" : ""}">` +
+        `${pl.image ? `<img class="place__thumb" src="${esc(pl.image)}" alt="" loading="lazy" decoding="async">` : ""}` +
+        `<span><span class="place__name">${esc(pl.name)}</span><br>${mapLink(pl.address)}</span></li>`).join("");
       return `<div class="card info-card${card.accent ? " info-card--accent" : ""}">
         <div class="info-card__icon">${ICON[card.icon] || ""}</div>
         <div><h3>${esc(card.title)}</h3><ul>${places}${lines}</ul></div>

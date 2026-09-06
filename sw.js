@@ -1,7 +1,7 @@
 /* Network-first service worker: always fetch fresh, fall back to cache offline. */
-const CACHE = "pd2026-v2";
+const CACHE = "pd2026-v3";
 const ASSETS = ["./", "./index.html", "./style.css", "./app.js", "./data.js"];
-const IMAGES = ["melaka-stadthuys", "port-dickson-teluk-kemang", "seremban-market", "ulu-bendul", "gunung-angsi",
+const IMAGES = ["melaka-stadthuys", "ola-mutiara", "seremban-market", "ulu-bendul", "gunung-angsi",
   "cape-rachado-lighthouse", "cape-rachado-beach", "milky-way", "teluk-pelanduk-jetty", "sushi-bento", "yong-peng"]
   .map(n => "./img/" + n + ".jpg");
 

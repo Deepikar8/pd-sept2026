@@ -1,0 +1,4 @@
+# Source PDFs stay local; the site is the published version.
+*.pdf
+.DS_Store
+.claude/

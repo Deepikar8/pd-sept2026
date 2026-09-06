@@ -37,6 +37,33 @@
   </header>
 
   <main>
+    <section id="journey" class="section">
+      <h2 class="section__title">The journey</h2>
+      <p class="section__lead" id="journey-status"></p>
+      <div class="card map-card">
+        <svg id="journey-map" viewBox="0 0 360 400" role="img" aria-labelledby="jm-title" class="jmap">
+          <title id="jm-title">Map of the trip route along the west coast of Peninsular Malaysia</title>
+          <rect x="0" y="0" width="360" height="400" class="jm-sea"/>
+          <path class="jm-land" d="M26,0 C18,35 28,70 40,99 C46,116 52,128 62,140 C80,160 100,175 118,190 C140,210 158,240 178,268 C200,298 235,325 272,342 C295,352 318,350 342,362 L360,368 L360,0 Z"/>
+          <ellipse class="jm-land" cx="318" cy="380" rx="18" ry="8"/>
+          <text class="jm-sea-label" transform="translate(58,300) rotate(-52)">Strait of Malacca</text>
+          <text class="jm-land-label" x="300" y="290" text-anchor="middle">Malaysia</text>
+          <path class="jm-leader" d="M166,99 L46,99"/>
+          <circle class="jm-anchor" cx="40" cy="99" r="4.5"/>
+          <text class="jm-label" x="48" y="115">Port Dickson</text>
+          <g class="jm-inset">
+            <rect x="166" y="28" width="184" height="132" rx="12" class="jm-inset-box"/>
+            <path class="jm-land" d="M180,28 C190,60 196,90 204,120 C210,140 222,152 236,160 L350,160 L350,28 Z"/>
+            <text class="jm-inset-title" x="178" y="44">Port Dickson, zoomed in</text>
+          </g>
+          <g id="jm-routes"></g>
+          <g id="jm-stops"></g>
+          <g id="jm-bus"></g>
+        </svg>
+      </div>
+      <div class="stops" id="journey-stops" role="list"></div>
+    </section>
+
     <section id="info" class="section">
       <h2 class="section__title">Key info</h2>
       <div class="info-grid" id="info-grid"></div>

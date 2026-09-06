@@ -390,6 +390,48 @@ main { max-width: 760px; margin: 0 auto; padding: 0 1rem 3rem; }
 .pack-item.is-done .pack-item__text { text-decoration: line-through; color: var(--muted); }
 .pack-item.is-done .pack-item__note { color: var(--muted); }
 
+/* ------------------------------------------------------------ Journey */
+.map-card { padding: .5rem; overflow: hidden; }
+.jmap { display: block; width: 100%; height: auto; font-family: var(--font-body); }
+.jm-sea { fill: color-mix(in srgb, var(--sky) 55%, var(--card)); }
+.jm-land { fill: color-mix(in srgb, var(--sand) 70%, var(--card)); stroke: color-mix(in srgb, var(--sea) 45%, var(--sand)); stroke-width: 1.2; }
+.jm-sea-label, .jm-land-label { font-size: 11px; fill: var(--muted); letter-spacing: .08em; text-transform: uppercase; font-weight: 700; }
+.jm-leader { fill: none; stroke: var(--sea); stroke-width: 1.2; stroke-dasharray: 3 3; opacity: .7; }
+.jm-inset-box { fill: var(--card); stroke: var(--sea); stroke-width: 1.5; }
+.jm-inset-title { font-size: 10.5px; font-weight: 700; fill: var(--sea-ink); letter-spacing: .06em; text-transform: uppercase; }
+.jm-route { fill: none; stroke: var(--muted); stroke-width: 2.2; stroke-dasharray: 4 5; stroke-linecap: round; opacity: .8; }
+.jm-route--done { stroke: var(--sea); stroke-dasharray: none; stroke-width: 3; opacity: 1; }
+.jm-stop { cursor: pointer; }
+.jm-stop circle { fill: var(--card); stroke: var(--sea); stroke-width: 2; }
+.jm-stop .jm-n { font-size: 11px; font-weight: 700; fill: var(--sea-ink); text-anchor: middle; dominant-baseline: central; pointer-events: none; }
+.jm-stop--done circle { fill: var(--sea); }
+.jm-stop--done .jm-n { fill: #fff; }
+.jm-stop--current circle { fill: var(--coral); stroke: var(--coral); }
+.jm-stop--current .jm-n { fill: #fff; }
+.jm-anchor { fill: var(--sea); stroke: var(--card); stroke-width: 1.5; }
+.jm-stop .jm-ring { fill: none; stroke: var(--coral); stroke-width: 2; opacity: .8; }
+.jm-label { font-size: 11px; fill: var(--ink); font-weight: 700; pointer-events: none; text-anchor: start; paint-order: stroke; stroke: var(--card); stroke-width: 3px; stroke-linejoin: round; }
+.jm-label[text-anchor="end"] { text-anchor: end; }
+.jm-label--muted { fill: var(--ink-2); font-weight: 400; }
+.jm-bus circle { fill: var(--coral); stroke: #fff; stroke-width: 2; }
+.jm-bus path, .jm-bus rect { stroke: #fff; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.stops { display: flex; gap: .5rem; overflow-x: auto; scrollbar-width: none; margin-top: .8rem; padding: .15rem .15rem .4rem; }
+.stops::-webkit-scrollbar { display: none; }
+.stop {
+  flex: 0 0 auto; display: grid; grid-template-columns: auto 1fr; gap: .5rem; align-items: center;
+  text-align: left; padding: .45rem .7rem .45rem .5rem; border-radius: 14px; cursor: pointer;
+  background: var(--card); border: 1.5px solid var(--line); color: var(--ink); max-width: 15rem;
+  transition: transform .15s, border-color .15s;
+}
+.stop:hover { transform: translateY(-1px); border-color: var(--sea); }
+.stop__n { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: .82rem; border: 2px solid var(--sea); color: var(--sea-ink); background: var(--card); }
+.stop--done .stop__n { background: var(--sea); border-color: var(--sea); color: #fff; }
+.stop--current { border-color: var(--coral); background: color-mix(in srgb, var(--coral-2) 60%, var(--card)); }
+.stop--current .stop__n { background: var(--coral); border-color: var(--coral); color: #fff; }
+.stop__name { font-weight: 700; font-size: .9rem; line-height: 1.2; white-space: nowrap; }
+.stop__sub { display: block; font-weight: 400; font-size: .78rem; color: var(--ink-2); white-space: nowrap; }
+.stop--done .stop__name { color: var(--ink-2); }
+
 /* ------------------------------------------------------------ Photos */
 .cover {
   margin: 0 0 1rem; position: relative; overflow: hidden;

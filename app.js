@@ -212,6 +212,108 @@
     if (curStep) curStep.classList.add("is-now");
   }
 
+  /* ----------------------------------------------------------- journey */
+  function glyphInner(name) {
+    return (ICON[name] || ICON.activity).replace(/^<svg[^>]*>/, "").replace(/<\/svg>$/, "");
+  }
+  function stopState(stop, iso, now) {
+    const done = stop.date < iso || (stop.date === iso && (toMinutes(stop.time) || 0) <= now);
+    return done ? "done" : "upcoming";
+  }
+  function renderJourney() {
+    const J = T.journey; if (!J || !$("#journey-map")) return;
+    const iso = todayISO(), now = nowMinutes();
+    const states = J.map(s => stopState(s, iso, now));
+    const lastDone = states.lastIndexOf("done");
+    const tripOver = iso > T.end;
+    const currentIdx = tripOver ? -1 : lastDone;
+    if (currentIdx >= 0) states[currentIdx] = "current";
+    const doneCount = states.filter(s => s !== "upcoming").length;
+
+    /* status line */
+    const st = $("#journey-status");
+    if (iso < T.start) {
+      const n = daysBetween(iso, T.start);
+      st.textContent = `${J.length} stops. We set off in ${n === 1 ? "1 day" : n + " days"}. Tap a stop to see that day.`;
+    } else if (tripOver) {
+      st.textContent = `All ${J.length} stops done. Home sweet home.`;
+    } else {
+      const c = J[currentIdx];
+      st.textContent = `Stop ${c.n} of ${J.length}: ${c.name}. ${J.length - c.n === 0 ? "Last stop!" : (J.length - c.n) + " to go."}`;
+    }
+
+    /* routes: segment i connects stop i to stop i+1; done once stop i+1 is reached */
+    const routes = [];
+    for (let i = 0; i < J.length - 1; i++) {
+      const key = J[i].n + "-" + J[i + 1].n;
+      const d = T.journeyRoutes[key]; if (!d) continue;
+      const done = states[i + 1] !== "upcoming";
+      routes.push(`<path class="jm-route${done ? " jm-route--done" : ""}" d="${d}"/>`);
+    }
+    /* inset link from stop 3 (stays) to stop 5 (Tanjung Tuan) inside the zoom box */
+    if (T.journeyRoutes["3-5"]) {
+      const done = states[4] !== "upcoming";
+      routes.push(`<path class="jm-route${done ? " jm-route--done" : ""}" d="${T.journeyRoutes["3-5"]}"/>`);
+    }
+    $("#jm-routes").innerHTML = routes.join("");
+
+    /* markers: main map shows stops without an inset position (PD cluster drawn once), inset shows its own */
+    const drawn = new Set();
+    const marks = [];
+    const labelOffsets = { 1: [-16, 4, "end"], 2: [16, 4], 3: [16, 4], 4: [16, 4], 5: [16, 4], 6: [16, 4], 7: [16, 4], 8: [16, 4], 9: [-16, 4, "end"] };
+    J.forEach((s, i) => {
+      const [x, y] = s.inset || s.main;
+      const key = x + "," + y;
+      const st = states[i];
+      if (drawn.has(key)) {
+        /* shared marker (Singapore start/home, PD anchor): upgrade its state/number */
+        const prev = marks.find(m => m.key === key);
+        if (prev && (st === "current" || (st === "done" && prev.state !== "current"))) { prev.state = st; prev.n = s.n; prev.idx = i; }
+        return;
+      }
+      drawn.add(key);
+      const [dx, dy, anchor] = labelOffsets[s.n] || [16, 4];
+      marks.push({ key, x, y, n: s.n, idx: i, state: st, name: s.label || s.name, dx, dy, anchor });
+    });
+    $("#jm-stops").innerHTML = marks.map(m =>
+      `<g class="jm-stop jm-stop--${m.state}" data-idx="${m.idx}" tabindex="0" role="button" aria-label="Stop ${m.n}, ${esc(m.name)}">
+        ${m.state === "current" ? `<circle class="jm-ring" cx="${m.x}" cy="${m.y}" r="12"><animate attributeName="r" values="12;19;12" dur="1.8s" repeatCount="indefinite"/><animate attributeName="opacity" values=".8;0;.8" dur="1.8s" repeatCount="indefinite"/></circle>` : ""}
+        <circle cx="${m.x}" cy="${m.y}" r="11"/>
+        <text class="jm-n" x="${m.x}" y="${m.y}">${m.n}</text>
+        <text class="jm-label" x="${m.x + m.dx}" y="${m.y + m.dy}"${m.anchor ? ` text-anchor="${m.anchor}"` : ""}>${esc(m.name)}</text>
+      </g>`).join("");
+
+    /* bus marker at the current stop, or at the start before the trip */
+    const busAt = currentIdx >= 0 ? J[currentIdx] : (tripOver ? null : J[0]);
+    $("#jm-bus").innerHTML = busAt ? (() => {
+      const [x, y] = busAt.inset || busAt.main;
+      const [ox, oy] = busAt.inset ? [-15, -6] : [12, -15];
+      return `<g class="jm-bus" transform="translate(${x + ox},${y + oy})"><circle r="9"/><g transform="translate(-6,-6) scale(.5)">${glyphInner("bus")}</g></g>`;
+    })() : "";
+
+    /* stop chips */
+    $("#journey-stops").innerHTML = J.map((s, i) =>
+      `<button type="button" class="stop stop--${states[i]}" data-day="${s.day}" role="listitem">
+        <span class="stop__n">${states[i] === "done" ? "✓" : s.n}</span>
+        <span class="stop__name">${esc(s.name)}<span class="stop__sub">${esc(s.when)} · ${esc(s.what)}</span></span>
+      </button>`).join("");
+    if (currentIdx >= 0) {
+      const chip = $("#journey-stops").children[currentIdx];
+      if (chip) chip.scrollIntoView({ block: "nearest", inline: "center" });
+    }
+  }
+  function goToDay(idx) {
+    selectDay(idx);
+    $("#days").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  function wireJourney() {
+    const map = $("#journey-map"); if (!map) return;
+    const act = el => { const g = el.closest(".jm-stop"); if (g) goToDay(T.journey[Number(g.dataset.idx)].day); };
+    map.addEventListener("click", e => act(e.target));
+    map.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); act(e.target); } });
+    $("#journey-stops").addEventListener("click", e => { const b = e.target.closest(".stop"); if (b) goToDay(Number(b.dataset.day)); });
+  }
+
   /* -------------------------------------------------------- meals glance */
   function renderGlance() {
     const row = (label, m) => `<div class="glance-row">
@@ -290,6 +392,8 @@
     renderPanels(selected);
     renderLegend();
     wireTabs();
+    renderJourney();
+    wireJourney();
     markNow(todayIdx);
     renderGlance();
     renderPacking();
@@ -304,6 +408,7 @@
       const tIdx = q.phase === "during" ? q.n : -1;
       if (tIdx !== todayIdx) { location.reload(); return; }
       markNow(tIdx);
+      renderJourney();
     }, 60000);
 
     if ("serviceWorker" in navigator && location.protocol === "https:") {

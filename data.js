@@ -16,6 +16,32 @@ window.TRIP = {
   disclaimer:
     "Because of the nature of the activities, everything is subject to weather, which can be unpredictable. The organisers reserve the right to adjust activities for the safety of the group.",
 
+  /* Journey map. main = position on the coast map, inset = position in the
+     Port Dickson zoom box. Stops unlock once their date + time has passed. */
+  journey: [
+    { n: 1, name: "Singapore", when: "Wed 6:30am", what: "Home pickups", day: 0, date: "2026-09-09", time: "6:30am", main: [318, 380], icon: "bus" },
+    { n: 2, name: "Melaka", when: "Wed 12pm", what: "Lunch", day: 0, date: "2026-09-09", time: "12:00pm", main: [102, 168], icon: "food" },
+    { n: 3, name: "Port Dickson", when: "Wed 4pm", what: "Check in, BBQ night", day: 0, date: "2026-09-09", time: "4:00pm", main: [40, 99], inset: [200, 62], label: "Our AirBnBs", icon: "home" },
+    { n: 4, name: "Seremban & Ulu Bendul", when: "Thu 8:30am", what: "Market, hike, stream play", day: 1, date: "2026-09-10", time: "8:30am", main: [68, 49], label: "Ulu Bendul", icon: "activity" },
+    { n: 5, name: "Tanjung Tuan", when: "Fri 9:30am", what: "Caves and lighthouse", day: 2, date: "2026-09-11", time: "9:30am", main: [40, 99], inset: [204, 142], icon: "activity" },
+    { n: 6, name: "Observatory", when: "Fri 8pm", what: "Astronomy night", day: 2, date: "2026-09-11", time: "8:00pm", main: [40, 99], inset: [206, 94], icon: "star" },
+    { n: 7, name: "Teluk Pelanduk", when: "Sat 12:15pm", what: "Move house, intertidal walk, sushi", day: 3, date: "2026-09-12", time: "12:15pm", main: [40, 99], inset: [212, 116], icon: "wave" },
+    { n: 8, name: "Yong Peng", when: "Sun 12:30pm", what: "Lunch stop", day: 4, date: "2026-09-13", time: "12:30pm", main: [213, 209], icon: "food" },
+    { n: 9, name: "Singapore", when: "Sun 4pm", what: "Home sweet home", day: 4, date: "2026-09-13", time: "4:00pm", main: [318, 380], icon: "flag" }
+  ],
+  /* Route segments between consecutive stops (SVG path data). */
+  journeyRoutes: {
+    "1-2": "M318,380 C300,340 230,300 190,275 C150,245 125,205 102,168",
+    "2-3": "M102,168 C85,150 60,130 40,99",
+    "3-4": "M40,99 C48,80 55,62 68,49",
+    "4-5": "M68,49 C55,62 48,80 40,99",
+    "5-6": "M204,142 C202,126 202,110 206,94",
+    "6-7": "M206,94 C214,100 216,108 212,116",
+    "7-8": "M40,99 C110,120 170,160 213,209",
+    "8-9": "M213,209 C250,260 290,320 318,380",
+    "3-5": "M200,62 C196,90 198,118 204,142"
+  },
+
   keyInfo: [
     {
       icon: "bus",

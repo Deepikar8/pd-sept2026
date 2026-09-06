@@ -36,6 +36,11 @@
     return `<a class="maplink" href="${url}" target="_blank" rel="noopener">${ICON.pin} Open in Maps</a>` +
            `<span class="addr">${esc(address)}</span>`;
   }
+  function photo(p, cls) {
+    if (!p || !p.src) return "";
+    return `<figure class="${cls}"><img src="${esc(p.src)}" alt="${esc(p.alt || "")}" loading="lazy" decoding="async">` +
+           `${p.caption ? `<figcaption>${esc(p.caption)}</figcaption>` : ""}</figure>`;
+  }
   function payTag(pay) {
     if (pay === "han") return `<span class="tag tag--han">By Han</span>`;
     if (pay === "own") return `<span class="tag tag--own">Own pay · RM</span>`;
@@ -112,6 +117,7 @@
         <div class="tl-title"><span>${esc(it.title)}</span>${payTag(it.pay)}<span class="now-slot"></span></div>
         ${it.note ? `<p class="tl-note">${esc(it.note)}</p>` : ""}
         ${it.address ? mapLink(it.address) : ""}
+        ${photo(it.image, "tl-photo")}
         ${steps}${menu}
       </div>
     </div>`;
@@ -123,7 +129,8 @@
           <p class="day__date">Day ${i + 1} · ${esc(d.weekday)} ${d.dayNum} Sept</p>
           <h3 class="day__title">${esc(d.title)}</h3>
         </div>
-        ${d.handy && d.handy.length ? `<div class="handy"><p class="handy__label">Handy today</p><ul>${d.handy.map(h => `<li>${esc(h)}</li>`).join("")}</ul></div>` : ""}
+        ${photo(d.cover, "cover")}
+        ${d.handy && d.handy.length ? `<div class="handy"><p class="handy__label">Pack for today</p><ul>${d.handy.map(h => `<li>${esc(h)}</li>`).join("")}</ul></div>` : ""}
         ${d.blocks.map(b => `<div class="part"><p class="part__label">${esc(b.part)}</p><div class="tl">${b.items.map(renderItem).join("")}</div></div>`).join("")}
       </section>`).join("");
   }
@@ -230,6 +237,23 @@
     });
   }
 
+  /* ----------------------------------------------------------- credits */
+  function renderCredits() {
+    const el = $("#credits"); if (!el) return;
+    const photos = [];
+    T.days.forEach(d => {
+      if (d.cover) photos.push(d.cover);
+      d.blocks.forEach(b => b.items.forEach(it => { if (it.image) photos.push(it.image); }));
+    });
+    const seen = new Set();
+    const parts = photos.filter(p => p.credit && !seen.has(p.src) && seen.add(p.src)).map(p => {
+      const c = p.credit;
+      const name = c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.title || "photo")}</a>` : esc(c.title || "photo");
+      return `${name} by ${esc(c.author)}, ${esc(c.license)}`;
+    });
+    el.innerHTML = parts.length ? "Photos via Wikimedia Commons: " + parts.join(" · ") : "";
+  }
+
   /* -------------------------------------------------------------- init */
   function init() {
     const p = renderStatus();
@@ -245,6 +269,7 @@
     wirePacking();
     $("#disclaimer").textContent = T.disclaimer;
     $("#updated").textContent = "Updated " + T.updated;
+    renderCredits();
 
     /* keep "Now" fresh; re-evaluate the day at midnight too */
     setInterval(() => {

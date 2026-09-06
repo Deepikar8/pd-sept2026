@@ -65,6 +65,8 @@ window.TRIP = {
       weekday: "Wed",
       dayNum: 9,
       title: "Lunch in Melaka, check-in, BBQ chill night",
+      cover: { src: "img/melaka-stadthuys.jpg", alt: "The red Stadthuys building in Melaka", caption: "Melaka: the Stadthuys at Dutch Square",
+        credit: { title: "Stadthuys Melaka", author: "Philip Nalangan", license: "CC BY 4.0", url: "https://commons.wikimedia.org/wiki/File:Stadthuys_Melaka.jpg" } },
       handy: ["Passport", "Ringgit for lunch", "Water bottle", "Eat breakfast before the bus", "Be ready at your door from 6:30am"],
       blocks: [
         {
@@ -81,6 +83,8 @@ window.TRIP = {
               address: "Jaya, 1, Jln KLJ 9, Taman Kota Laksamana, 75200 Melaka, Malaysia" },
             { time: "2:00pm", kind: "bus", title: "Depart for Port Dickson" },
             { time: "4:00pm", kind: "stay", title: "Drop-off and check-in at AirBnB Ola Mutiara",
+              image: { src: "img/port-dickson-teluk-kemang.jpg", alt: "Beach at Teluk Kemang, Port Dickson", caption: "Port Dickson: Teluk Kemang beach",
+        credit: { title: "Teluk Kemang Beach, Port Dickson (2)", author: "AyyanD", license: "CC BY-SA 3.0", url: "https://commons.wikimedia.org/wiki/File:Teluk_Kemang_Beach,_Port_Dickson_(2).jpg" } },
               address: "3810, Jalan Siakap 1, Taman Pantai Dickson, 71050 Port Dickson, Negeri Sembilan, Malaysia" }
           ]
         },
@@ -117,6 +121,8 @@ window.TRIP = {
       weekday: "Thu",
       dayNum: 10,
       title: "Seremban market, then nature immersion at Ulu Bendul",
+      cover: { src: "img/ulu-bendul.jpg", alt: "Granite boulders and forest stream at Ulu Bendul", caption: "Ulu Bendul Forest Eco-Park",
+        credit: { title: "Granite boulders, Ulu Bendul Forest Eco-Park", author: "AyyanD", license: "CC BY-SA 3.0", url: "https://commons.wikimedia.org/wiki/File:Granite_boulders,_Ulu_Bendul_Forest_Eco-Park.jpg" } },
       handy: ["Ringgit for breakfast & lunch", "Walking shoes or sandals", "Water shoes", "Swimwear", "Small towel", "Change of clothes", "Hat", "Insect repellent", "Sunblock", "Water bottle", "Labelled food containers & cutlery"],
       blocks: [
         {
@@ -124,8 +130,12 @@ window.TRIP = {
           items: [
             { time: "7:30am", kind: "bus", title: "Bus pick-up at AirBnB Ola Mutiara" },
             { time: "8:30am", kind: "meal", pay: "own", title: "Breakfast at Seremban Market",
-              note: "We also shop for fresh seafood and fish for the kids' bushcraft." },
+              note: "We also shop for fresh seafood and fish for the kids' bushcraft.",
+              image: { src: "img/seremban-market.jpg", alt: "Seremban Grand Market building", caption: "Seremban Grand Market",
+        credit: { title: "Seremban Grand Market", author: "Chongkian", license: "CC BY-SA 4.0", url: "https://commons.wikimedia.org/wiki/File:Seremban_Grand_Market.jpg" } } },
             { time: "10:00am", kind: "activity", title: "Hike, bushcraft & water play @ Ulu Bendul",
+              image: { src: "img/gunung-angsi.jpg", alt: "Gunung Angsi seen across the fields", caption: "Gunung Angsi, the adults' hiking trail",
+        credit: { title: "Angsi Mountain 3", author: "AyyanD", license: "CC BY-SA 4.0", url: "https://commons.wikimedia.org/wiki/File:Angsi_Mountain_3.jpg" } },
               steps: [
                 { time: "10:00am", text: "Arrival and toilet break" },
                 { time: "10:15am", text: "Split into two groups. Adults: hike along the Gunung Angsi trail. Kids: bushcraft." },
@@ -173,6 +183,8 @@ window.TRIP = {
       weekday: "Fri",
       dayNum: 11,
       title: "Cave exploration at Tanjong Tuan, astronomy night at the observatory",
+      cover: { src: "img/cape-rachado-lighthouse.jpg", alt: "Cape Rachado Lighthouse at Tanjung Tuan", caption: "Cape Rachado Lighthouse, Tanjung Tuan",
+        credit: { title: "Cape Rachado Lighthouse, Malacca, Malaysia, 2024 02", author: "FBilula", license: "CC BY-SA 4.0", url: "https://commons.wikimedia.org/wiki/File:Cape_Rachado_Lighthouse,_Malacca,_Malaysia,_2024_02.jpg" } },
       handy: ["Walking shoes or sandals", "Water shoes", "Swimwear", "Small towel", "Hat", "Sunblock", "Insect repellent", "Water bottle", "Labelled food containers & cutlery", "Ringgit for dinner", "Long sleeves for the night (mosquitoes)"],
       blocks: [
         {
@@ -192,6 +204,8 @@ window.TRIP = {
             },
             { time: "9:00am", kind: "bus", title: "Bus pick-up at Han's" },
             { time: "9:30am", kind: "activity", title: "Cave exploration @ Tanjong Tuan, Melaka",
+              image: { src: "img/cape-rachado-beach.jpg", alt: "Rocky beach below Cape Rachado", caption: "The beach and rocky shore below the lighthouse",
+        credit: { title: "Cape Rachado Beach", author: "Benjy8769", license: "CC BY-SA 4.0", url: "https://commons.wikimedia.org/wiki/File:Cape_Rachado_Beach.jpg" } },
               steps: [
                 { time: "9:30am", text: "Arrival and intro to Tanjong Tuan Recreational Forest" },
                 { time: "10:00am", text: "Learn about a coastal forest's flora and fauna while hiking up to Cape Rachado Lighthouse, then down the Pulau Intan trail" },
@@ -230,6 +244,8 @@ window.TRIP = {
             { time: "6:30pm", kind: "meal", pay: "own", title: "Dinner at Yun Long Seafood Restaurant" },
             { time: "7:45pm", kind: "bus", title: "Head to the Negeri Sembilan Observatory" },
             { time: "8:00pm", kind: "activity", title: "Astronomy night @ Negeri Sembilan Observatory",
+              image: { src: "img/milky-way.jpg", alt: "The Milky Way over a dark landscape", caption: "The Milky Way (stock photo, not taken in Malaysia)",
+        credit: { title: "Milky Way Panorama (183296559)", author: "Panagiotis Laoudikos", license: "CC BY 3.0", url: "https://commons.wikimedia.org/wiki/File:Milky_Way_Panorama_(183296559).jpeg" } },
               steps: [
                 { time: "8:00pm", text: "Arrival and registration" },
                 { time: "8:15pm", text: "Walk up to the observatory, led by ushers" },
@@ -249,6 +265,8 @@ window.TRIP = {
       weekday: "Sat",
       dayNum: 12,
       title: "Move house, intertidal walk, parent-child sushi making",
+      cover: { src: "img/teluk-pelanduk-jetty.jpg", alt: "Fishermen's jetty at Teluk Pelanduk, Port Dickson", caption: "Fishermen's jetty at Teluk Pelanduk",
+        credit: { title: "Jeti Nelayan, Teluk Pelanduk, Port Dickson, Malaysia", author: "Ahmad Rithauddin", license: "CC BY 2.0", url: "https://commons.wikimedia.org/wiki/File:Jeti_Nelayan,_Teluk_Pelanduk,_Port_Dickson,_Malaysia_(8243199629).jpg" } },
       handy: ["Bags packed by 11:00am", "Water shoes", "Swimwear", "Small towel", "Hat", "Sunblock", "Water bottle"],
       blocks: [
         {
@@ -297,6 +315,8 @@ window.TRIP = {
           items: [
             { time: "4:00pm", kind: "meal", pay: "han", title: "Parent-child cooking session with Chef Han",
               note: "You make dinner together. Target: done by 6:30–7:00pm.",
+              image: { src: "img/sushi-bento.jpg", alt: "A sushi bento box", caption: "Sushi bento (stock photo)",
+        credit: { title: "Sushi Bento by Aji Sushi", author: "Andy Li", license: "CC0", url: "https://commons.wikimedia.org/wiki/File:Sushi_Bento_by_Aji_Sushi.jpg" } },
               menuTitle: "Sushi bento box",
               menu: [
                 "Inari sushi",
@@ -319,6 +339,8 @@ window.TRIP = {
       weekday: "Sun",
       dayNum: 13,
       title: "Lunch at Yong Peng, home sweet home",
+      cover: { src: "img/yong-peng.jpg", alt: "Main street of Yong Peng town", caption: "Yong Peng town, Johor",
+        credit: { title: "Yong Peng town", author: "Jack883", license: "CC BY-SA 3.0", url: "https://commons.wikimedia.org/wiki/File:Yong_Peng_town.jpg" } },
       handy: ["Everything packed", "Passport", "Ringgit for lunch", "Water bottle"],
       blocks: [
         {

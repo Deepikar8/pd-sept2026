@@ -1,9 +1,14 @@
 /* Network-first service worker: always fetch fresh, fall back to cache offline. */
-const CACHE = "pd2026-v1";
+const CACHE = "pd2026-v2";
 const ASSETS = ["./", "./index.html", "./style.css", "./app.js", "./data.js"];
+const IMAGES = ["melaka-stadthuys", "port-dickson-teluk-kemang", "seremban-market", "ulu-bendul", "gunung-angsi",
+  "cape-rachado-lighthouse", "cape-rachado-beach", "milky-way", "teluk-pelanduk-jetty", "sushi-bento", "yong-peng"]
+  .map(n => "./img/" + n + ".jpg");
 
 self.addEventListener("install", e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(CACHE).then(c =>
+    c.addAll(ASSETS).then(() => Promise.all(IMAGES.map(u => c.add(u).catch(() => {}))))
+  ).then(() => self.skipWaiting()));
 });
 self.addEventListener("activate", e => {
   e.waitUntil(
